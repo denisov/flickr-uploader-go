@@ -1,0 +1,14 @@
+# Create an app here https://www.flickr.com/services/apps to get api_key and api_secret
+api_key:
+api_secret:
+
+# System file for application token
+token_file_name: ~/.flickr-uploader-go/token.json
+
+db_path: ~/.flickr-uploader-go/flickr.db
+
+photos_path: /media/andrey/E/photo/
+exclude_dirs: [OTHER]
+
+# Sleep between api requests, milliseconds. Limit is 3600 queries per hour
+api_request_sleep_ms: 1100
