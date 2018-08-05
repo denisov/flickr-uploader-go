@@ -1,6 +1,6 @@
-package main
+package flickruploader
 
-func stringInSlice(str string, slice []string) bool {
+func StringInSlice(str string, slice []string) bool {
 	for _, v := range slice {
 		if v == str {
 			return true

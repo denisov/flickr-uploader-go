@@ -1,22 +1,24 @@
 package main
 
 import (
-	"os"
 	"fmt"
 	"io/ioutil"
+	"os"
+
 	"gopkg.in/yaml.v2"
 )
 
 type config struct {
-	TokenFileName     string `yaml:"token_file_name"`
-	APIKey            string `yaml:"api_key"`
-	APISecret         string `yaml:"api_secret"`
-	DbPath            string `yaml:"db_path"`
-	PhotosPath        string `yaml:"photos_path"`
+	TokenFileName     string   `yaml:"token_file_name"`
+	APIKey            string   `yaml:"api_key"`
+	APISecret         string   `yaml:"api_secret"`
+	DbPath            string   `yaml:"db_path"`
+	PhotosPath        string   `yaml:"photos_path"`
 	ExcludeDirs       []string `yaml:"exclude_dirs"`
-	APIRequestSleepMs int `yaml:"api_request_sleep_ms"`
+	APIRequestSleepMs int      `yaml:"api_request_sleep_ms"`
 }
 
+// todo возвращать не указатель
 func newConfig(fileName string) (*config, error) {
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
 		return nil, fmt.Errorf("no such file: %s", fileName)
