@@ -1,0 +1,9 @@
+[Unit]
+Description=Run flickr uploader go periodically
+
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=2h
+
+[Install]
+WantedBy=timers.target

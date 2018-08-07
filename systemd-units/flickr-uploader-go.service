@@ -1,0 +1,11 @@
+
+[Unit]
+Description=Flickr uploader
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/andrey/flickr-uploader-go/flickr-uploader-go -config /home/andrey/flickr-uploader-go/config.yml
+
+[Install]
+WantedBy=default.target

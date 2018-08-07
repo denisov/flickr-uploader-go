@@ -20,4 +20,9 @@ Upload a directory of photos to Flickr to use as a backup to your local storage.
 * run binary `flickr-uploader-go -config /path/to/config.yml`
 * default config `config.yml` in current directory
 
+## SystemD setup:
+    cp systemd-units/* ~/.config/systemd/user/systemctl --user enable flickr-uploader-go.timer
+    systemctl --user start flickr-uploader-go.timer
+    systemctl --user status flickr-uploader-go.timer
+
 Inspired by <https://github.com/trickortweak/flickr-uploader>
