@@ -14,7 +14,7 @@ import (
 
 func main() {
 	log.SetOutput(os.Stdout)
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.SetFlags(log.Lshortfile)
 
 	configFile := flag.String("config", "config.yml", "path to config.yml")
 	flag.Parse()

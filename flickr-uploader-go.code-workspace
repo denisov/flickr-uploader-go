@@ -2,7 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "/home/andrey/go/src/gopkg.in"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"terminal.integrated.rendererType": "dom"
+	}
 }

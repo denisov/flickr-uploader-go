@@ -65,10 +65,21 @@ func (s *Service) UploadPhoto(photoPath string) (string, error) {
 	params.Tags = []string{"flickruploadergo"}
 
 	response, err := flickr.UploadFile(s.client, photoPath, params)
+	// иногода flickr 500-тит.
+	if response.ErrorCode() == -1 {
+		log.Printf(
+			"Got -1 error code from Flickr library. It could be an InternalError (500). ResponseErrorMessage: %s. Error: %s Sleep and try again....",
+			response.ErrorMsg(),
+			err,
+		)
+		time.Sleep(20 * time.Second)
+		response, err = flickr.UploadFile(s.client, photoPath, params)
+	}
+
 	if err != nil {
 		err = errors.Wrapf(err, "Upload failed. Photo:%s", photoPath)
 		if response != nil {
-			err = errors.Wrap(err, response.ErrorMsg())
+			err = errors.Wrapf(err, "Code:%d Message:%s", response.ErrorCode(), response.ErrorMsg())
 		}
 		return "", err
 	}
