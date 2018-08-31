@@ -2,6 +2,7 @@ package uploader
 
 import (
 	"log"
+	"os"
 	"sort"
 
 	"github.com/denisov/flickr-uploader-go"
@@ -78,10 +79,16 @@ func (s *Service) SetFilesToProcess() {
 }
 
 // Upload загружает фото в удалённое хранилище
-func (s *Service) Upload() error {
+func (s *Service) Upload(stop chan os.Signal) error {
 	log.Printf("Uploading new photos. Count:%d ..", len(s.pathsToUpload))
 
 	for _, photoPathItem := range s.pathsToUpload {
+		select {
+		case <-stop:
+			log.Printf("got STOP! Stopping ... ")
+			return nil
+		default:
+		}
 
 		photoID, err := s.remoteStorage.UploadPhoto(photoPathItem)
 		if err != nil {
@@ -128,10 +135,17 @@ func (s *Service) Upload() error {
 }
 
 // Delete удаляет фото из удалённого хранилища
-func (s *Service) Delete() error {
+func (s *Service) Delete(stop chan os.Signal) error {
 	log.Printf("Deleting photos from Flickr. Count: %d ..", len(s.photoIDsToDelete))
 
 	for _, photoID := range s.photoIDsToDelete {
+		select {
+		case <-stop:
+			log.Printf("got STOP! Stopping ... ")
+			return nil
+		default:
+		}
+
 		log.Printf("Deleting photo: %s", photoID)
 
 		err := s.remoteStorage.DeletePhoto(photoID)

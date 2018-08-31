@@ -1,11 +1,5 @@
 ### TODO
 
-
-- фотки дублируются при start/stop. Видимо и до рестарта загружается и после.
-Надо сделать graceful shutdown
-http://guzalexander.com/2017/05/31/gracefully-exit-server-in-go.html
-https://medium.com/@kpbird/golang-gracefully-stop-application-23c2390bb212
-
 - может перейти на google photo? Оно пока developer preview
 - заюзать errors везде 
 - покрыть тестами

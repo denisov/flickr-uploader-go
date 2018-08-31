@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/denisov/flickr-uploader-go/flickr"
@@ -57,12 +58,15 @@ func main() {
 
 	uploader.SetFilesToProcess()
 
-	err = uploader.Upload()
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt)
+
+	err = uploader.Upload(stop)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = uploader.Delete()
+	err = uploader.Delete(stop)
 	if err != nil {
 		log.Fatal(err)
 	}
