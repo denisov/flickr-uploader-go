@@ -2,8 +2,8 @@ package uploader
 
 import (
 	"log"
-	"os"
 	"sort"
+	"sync"
 
 	"github.com/denisov/flickr-uploader-go"
 	"github.com/pkg/errors"
@@ -11,6 +11,9 @@ import (
 
 // Service это сервис синхронизации файлов на flickr
 type Service struct {
+	stopped      bool
+	mutexStopped sync.Mutex
+
 	photoFiles []string
 	dbFiles    map[string]string // FIXME описать или упростить формат
 
@@ -32,7 +35,23 @@ func NewService(
 		fileManager:   fileManager,
 		dbStorage:     dbstorage,
 		remoteStorage: remoteStorage,
+		stopped:       false,
 	}
+}
+
+// Stop взводит флаг остановки сервиса
+func (s *Service) Stop() {
+	s.mutexStopped.Lock()
+	s.stopped = true
+	s.mutexStopped.Unlock()
+}
+
+func (s *Service) isStopped() bool {
+	s.mutexStopped.Lock()
+	isStopped := s.stopped
+	s.mutexStopped.Unlock()
+
+	return isStopped
 }
 
 // InitPhotos загружает фото из базы и из файловой системы в поля структуры
@@ -79,15 +98,15 @@ func (s *Service) SetFilesToProcess() {
 }
 
 // Upload загружает фото в удалённое хранилище
-func (s *Service) Upload(stop chan os.Signal) error {
+func (s *Service) Upload() error {
+	if s.isStopped() {
+		return nil
+	}
 	log.Printf("Uploading new photos. Count:%d ..", len(s.pathsToUpload))
 
 	for _, photoPathItem := range s.pathsToUpload {
-		select {
-		case <-stop:
-			log.Printf("got STOP! Stopping ... ")
+		if s.isStopped() {
 			return nil
-		default:
 		}
 
 		photoID, err := s.remoteStorage.UploadPhoto(photoPathItem)
@@ -135,15 +154,15 @@ func (s *Service) Upload(stop chan os.Signal) error {
 }
 
 // Delete удаляет фото из удалённого хранилища
-func (s *Service) Delete(stop chan os.Signal) error {
+func (s *Service) Delete() error {
+	if s.isStopped() {
+		return nil
+	}
 	log.Printf("Deleting photos from Flickr. Count: %d ..", len(s.photoIDsToDelete))
 
 	for _, photoID := range s.photoIDsToDelete {
-		select {
-		case <-stop:
-			log.Printf("got STOP! Stopping ... ")
+		if s.isStopped() {
 			return nil
-		default:
 		}
 
 		log.Printf("Deleting photo: %s", photoID)

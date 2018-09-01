@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/denisov/flickr-uploader-go/flickr"
@@ -58,15 +59,21 @@ func main() {
 
 	uploader.SetFilesToProcess()
 
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt)
+	stop := make(chan os.Signal)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 
-	err = uploader.Upload(stop)
+	go func() {
+		signal := <-stop
+		log.Printf("got signal: '%v'. Stopping ... ", signal)
+		uploader.Stop()
+	}()
+
+	err = uploader.Upload()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = uploader.Delete(stop)
+	err = uploader.Delete()
 	if err != nil {
 		log.Fatal(err)
 	}
