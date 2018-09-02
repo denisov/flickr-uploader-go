@@ -1,0 +1,11 @@
+github.com/mattn/go-sqlite3 v1.9.0 h1:pDRiWfl+++eC2FEFRy6jXmQlvp4Yh3z1MJKg4UeYM/4=
+github.com/mattn/go-sqlite3 v1.9.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
+github.com/pkg/errors v0.7.0 h1:WLW8U1O88/efNaH7+8C+KBNkZRGD+WCmNlC0b06x/Ig=
+github.com/pkg/errors v0.7.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/pkg/errors v0.8.0 h1:WdK/asTD0HN+q6hsWO3/vpuAkAr+tw6aNJNDFFf0+qw=
+github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/masci/flickr.v2 v2.0.0-20161216033441-3cc496dc15cd h1:YPHATuRxBJVPx0dQ3OZhvnBXqpIxQXAZiIRUOzIDYeI=
+gopkg.in/masci/flickr.v2 v2.0.0-20161216033441-3cc496dc15cd/go.mod h1:Z6PGcItVkgU75W5IIPijzhyzr0YO4rVCWOMYe6bHHBk=
+gopkg.in/yaml.v2 v2.2.1 h1:mUhvW9EsL+naU5Q3cakzfE91YhliOondGd6ZrsDBHQE=
+gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
