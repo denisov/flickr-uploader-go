@@ -23,7 +23,7 @@ func main() {
 
 	config, err := newConfig(*configFile)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("%+v", err)
 	}
 
 	sqliteService, err := sqlite.NewService(config.DbPath)
@@ -70,11 +70,11 @@ func main() {
 
 	err = uploader.Upload()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("%+v", err)
 	}
 
 	err = uploader.Delete()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("%+v", err)
 	}
 }

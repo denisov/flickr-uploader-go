@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 
+	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
 
@@ -21,17 +21,17 @@ type config struct {
 // todo возвращать не указатель
 func newConfig(fileName string) (*config, error) {
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
-		return nil, fmt.Errorf("no such file: %s", fileName)
+		return nil, errors.WithStack(err)
 	}
 
 	file, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		return nil, fmt.Errorf("reading file %s failed: %v", fileName, err)
+		return nil, errors.WithStack(err)
 	}
 
 	newConfig := config{}
 	if err := yaml.Unmarshal(file, &newConfig); err != nil {
-		return nil, fmt.Errorf("unmarshal failed: %v", err)
+		return nil, errors.WithStack(err)
 	}
 	return &newConfig, nil
 }

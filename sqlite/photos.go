@@ -84,29 +84,6 @@ func (s *Service) PhotosDelete(id string) error {
 	return nil
 }
 
-// // PhotosGetEmptySet returns photos without set
-// // TODO may be it is better to return slice of struct??
-// func (s *Service) PhotosGetEmptySet() ([][]string, error) {
-// 	res := [][]string{}
-
-// 	rows, err := s.connection.Query("SELECT id, path FROM photos WHERE set_id is NULL ORDER BY path")
-// 	if err != nil {
-// 		return nil, errors.Wrap(err, "can't select photos")
-// 	}
-// 	defer rows.Close()
-
-// 	var id, path string
-// 	for rows.Next() {
-// 		err := rows.Scan(&id, &path)
-// 		if err != nil {
-// 			return nil, errors.Wrap(err, "can't scan row")
-// 		}
-// 		//res[id] = path
-// 		res = append(res, []string{id, path})
-// 	}
-// 	return res, nil
-// }
-
 // PhotosAddToSet add photo to set
 func (s *Service) PhotosAddToSet(id, setID string) error {
 	stmt, err := s.connection.Prepare("UPDATE photos SET set_id=? WHERE id=?")
