@@ -126,7 +126,7 @@ func (s *Service) AddPhotoToPhotoset(photoID, photosetID string) error {
 		} else {
 			return errors.Wrapf(
 				err,
-				"Failed to add photo to set. Set:%s. Photo:%s. Error:%s",
+				"Failed to add photo to set. Set:%s. Photo:%s",
 				photosetID,
 				photoID,
 			)

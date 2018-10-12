@@ -62,6 +62,10 @@ func (s *Service) InitPhotos() error {
 	if err != nil {
 		return errors.Wrap(err, "Can't get all photos from disk")
 	}
+
+	// фотографии теоретически уже отсортированы, но при появлении русских букв в именах получаются расхождения
+	// с sort.Strings и sort.SearchStrings поэтому сортирнём ещё раз
+	sort.Strings(photoFiles)
 	s.photoFiles = photoFiles
 
 	log.Println("Getting all photos in DB")
